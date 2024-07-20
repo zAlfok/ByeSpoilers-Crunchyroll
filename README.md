@@ -1,15 +1,45 @@
 # ByeSpoilers - Crunchyroll
-Userscript that allows you to relax and avoid any spoilers from thumbnails, titles, etc on Crunchyroll. Inspired on TimeBomb's script (https://greasyfork.org/users/160017).  <a href="https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js" target="_blank">
-  <img src="https://img.shields.io/badge/Install-Click%20Here-brightgreen" alt="Install">
-</a>
+Userscript that allows you to relax and avoid any spoilers from thumbnails, titles, etc on Crunchyroll. Inspired on TimeBomb's script (https://greasyfork.org/users/160017).  
 
 <p align="center">
-    <a href="https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js">
+    <picture>
         <img src="assets-images/logov2.png" width="185">
-    </a>
+    </picture>
 </p>
 
+<h2>Overview</h2>
 If you use Crunchyroll and are fed up with episode titles or thumbnails (totally not spoiler-ish wink wink) revealing what's going to happen (probably the most crucial part wink wink), or if you're scrolling through the episode list (trusting that no title or thumbnail will spoil a character's death wink wink) only to find out someone dies N episodes later, then this script is your new best friend! Let's break down what this script censors and how it works.
+
+<h2>Installation</h2>
+<p>In order to use the script you should install a script-manager like Violentmonkey, Tampermonkey, etc. To do this you can search on the extension store of your browser:</p>
+
+<br>
+<p align="center">
+<a href="https://chrome.google.com/webstore/detail/violentmonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">
+  <img src="https://img.shields.io/badge/Install%20for%20Chrome-brightgreen?style=flat&logo=googlechrome&logoColor=white" alt="Install Violentmonkey for Chrome">
+  <img src="https://img.shields.io/static/v1?label=&message=Violentmonkey&color=blue&logo=violentmonkey&logoColor=white" alt="Violentmonkey">
+</a>
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/" target="_blank">
+  <img src="https://img.shields.io/badge/Install%20for%20Firefox-orange?style=flat&logo=firefox&logoColor=white" alt="Install Violentmonkey for Firefox">
+  <img src="https://img.shields.io/static/v1?label=&message=Violentmonkey&color=blue&logo=violentmonkey&logoColor=white" alt="Violentmonkey">
+</a>
+
+<br>
+<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">
+  <img src="https://img.shields.io/badge/Install%20for%20Chrome-brightgreen?style=flat&logo=googlechrome&logoColor=white" alt="Install Tampermonkey for Chrome">
+  <img src="https://img.shields.io/static/v1?label=&message=Tampermonkey&color=black&logo=tampermonkey&logoColor=white" alt="Tampermonkey">
+</a>
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/" target="_blank">
+  <img src="https://img.shields.io/badge/Install%20for%20Firefox-orange?style=flat&logo=firefox&logoColor=white" alt="Install Tampermonkey for Firefox">
+  <img src="https://img.shields.io/static/v1?label=&message=Tampermonkey&color=black&logo=tampermonkey&logoColor=white" alt="Tampermonkey">
+</a>
+</p>
+<br>
+Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js" target="_blank">
+  <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
+</a>
 
 - <b>What will it protect you from?</b><br> 
 Spoilers sneaking up like ninjas in the following pages:
