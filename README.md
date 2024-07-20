@@ -41,6 +41,7 @@ Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/
   <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
 </a>
 
+<h2>Information</h2>
 - <b>What will it protect you from?</b><br> 
 Spoilers sneaking up like ninjas in the following pages:
     - /home: Continue Watching Grid, Watchlist Grid (Hover),
