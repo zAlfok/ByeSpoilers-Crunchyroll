@@ -7,7 +7,7 @@
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll, inspired on TimeBomb's script (https://greasyfork.org/users/160017)
-// @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/main/logo.png
+// @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/assets-images/logov2.png
 // @run-at         document-start
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @downloadURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js
