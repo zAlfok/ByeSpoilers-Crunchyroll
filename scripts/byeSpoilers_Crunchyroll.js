@@ -10,8 +10,8 @@
 // @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/main/logo.png
 // @run-at         document-start
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
-// @downloadURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/byeSpoilers_Crunchyroll.js
-// @updateURL      https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/byeSpoilers_Crunchyroll.js
+// @downloadURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.js
+// @updateURL      https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.js
 // @supportURL     https://github.com/zAlfok/ByeSpoilers-Crunchyroll/issues
 // ==/UserScript==
 
