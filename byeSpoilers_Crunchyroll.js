@@ -65,7 +65,7 @@ const USER_CONFIG = {
 
     // true: Removes elements related to premium trial:
     // Menu bar "TRY FREE PREMIUM" Button, Banner under player (/watch)
-    HIDE_PREMIUM_TRIAL: true
+    HIDE_PREMIUM_TRIAL: false
 };
 // USER CONFIGS END, DO NOT EDIT ANYTHING BELOW
 // -----------------------------------------------------------------------------------------------------------------
