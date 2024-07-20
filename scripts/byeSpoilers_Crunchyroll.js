@@ -6,7 +6,7 @@
 // @version        1.0
 // @license        GPL-3.0
 // @author         Alfok
-// @description    Hide episode's titles, thumbnails, descriptions and tooltips on Crunchyroll, inspired on TimeBomb's script (https://greasyfork.org/users/160017)
+// @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll, inspired on TimeBomb's script (https://greasyfork.org/users/160017)
 // @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/main/logo.png
 // @run-at         document-start
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
