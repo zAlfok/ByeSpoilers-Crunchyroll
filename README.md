@@ -3,7 +3,7 @@ Userscript that allows you to relax and avoid any spoilers from thumbnails, titl
 
 <p align="center">
     <picture>
-        <img src="logov2.png" width="185">
+        <img src="assets-images/logov2.png" width="185">
     </picture>
 </p>
 
