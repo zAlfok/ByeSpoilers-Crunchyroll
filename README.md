@@ -1,4 +1,4 @@
-# ByeSpoilers Crunchyroll
+# ByeSpoilers - Crunchyroll
 Userscript that allows you to relax and avoid any spoilers from thumbnails, titles, etc on Crunchyroll. Inspired on TimeBomb's script (https://greasyfork.org/users/160017).  <a href="https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js" target="_blank">
   <img src="https://img.shields.io/badge/Install-Click%20Here-brightgreen" alt="Install">
 </a>
