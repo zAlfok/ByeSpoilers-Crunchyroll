@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           ByeSpoilers Crunchyroll
-// @namespace      Violentmonkey Scripts
+// @namespace      https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @match          https://www.crunchyroll.com/*
 // @grant          none
 // @version        1.0
