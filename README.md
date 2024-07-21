@@ -15,11 +15,11 @@ Note: I am using Dark Reader (enables automatic dark mode on any site) and AdGua
 
 | Crunchyroll WITHOUT ByeSpoilers | Crunchyroll WITH ByeSpoilers |
 |--------------------------------------------|-----------------------------------------|
-| ![Imagen 1](assets-images/01_without.jpg) | ![Imagen 2](assets-images/02_with.jpg) |
+| ![Imagen 1](assets-images/01_without.jpg) | ![Imagen 2](assets-images/01_with.jpg) |
 | ![Imagen 3](assets-images/02_without.jpg) | ![Imagen 4](assets-images/02_with.jpg) |
 | ![Imagen 5](assets-images/03_without.jpg) | ![Imagen 6](assets-images/03_with.jpg) |
 | ![Imagen 7](assets-images/04_without.jpg) | ![Imagen 8](assets-images/04_with.jpg) |
-| ![Imagen 9](assets-images/05_1_without.jpg) | ![Imagen 10](assets-images/05_2_with.jpg) |
+| ![Imagen 9](assets-images/05_1_without.jpg) | ![Imagen 10](assets-images/05_1_with.jpg) |
 | ![Imagen 11](assets-images/05_2_without.jpg) | ![Imagen 12](assets-images/05_2_with.jpg) |
 
 ## 📂 Installation
