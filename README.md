@@ -1,13 +1,13 @@
-# ByeSpoilers - Crunchyroll
+# ByeSpoilers - Crunchyroll <img src="assets-images/logov2.png" alt="Descripción de la imagen" style="height: 1em;">
 Userscript that allows you to relax and avoid any spoilers from thumbnails, titles, etc on Crunchyroll. Inspired on TimeBomb's script (https://greasyfork.org/users/160017).  
 
 <div align="center">
     <picture>
-        <img src="assets-images/logov2.png" width="185">
+        <img src="assets-images/logo_feature.jpg">
     </picture>
 </div>
 
-## Overview
+## 📖 Overview
 If you use Crunchyroll and are fed up with episode titles or thumbnails (totally not spoiler-ish wink wink) revealing what's going to happen (probably the most crucial part wink wink), or if you're scrolling through the episode list (trusting that no title or thumbnail will spoil a character's death wink wink) only to find out someone dies N episodes later, then this script is your new best friend! Let's break down what this script censors and how it works.
 
 ## 📷 Screenshots
@@ -39,9 +39,20 @@ Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/
   <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
 </a>
 <br><br>
+To do that make sure to click "Install + Edit" so you can modify the USER_CONFIG according to your preferences (if you'd like to)
+<br><br>
 <div align="center">
     <picture>
         <img src="assets-images/install_01.jpg">
+    </picture>
+</div>
+<br>
+After that, make sure to mark the checkbox "Allow edits," change the USER_CONFIG settings by toggling true or false for each feature, and then click the "Save" button (or press Ctrl + S) to apply the changes. <b>After each time you save the script, you must refresh Crunchyroll (if it was open)</b> to see the updates.<br><br>
+<em>⚠️ NOTICE THAT, AS STATED NEXT TO THE ALLOW EDITS CHECKBOX, ANY CHANGES THAT YOU MAKE WILL BE LOST IF THE SCRIPT IS UPDATED SO YOU'LL HAVE TO SET YOUR PREFERENCES AGAIN</em>
+<br><br>
+<div align="center">
+    <picture>
+        <img src="assets-images/install_02.jpg">
     </picture>
 </div>
 
