@@ -71,7 +71,7 @@ Since spoilers can come from all sorts of places and in all sorts of forms, fort
     - Blur episode's thumbnails (default enabled): Notice that not all thumbnails are episode-related so just those have blur.
     - Blur episode's titles (default disabled): Notices that this will blur the entire title element, so you'll not be able to see the episode number either.
     - Blur episode's descriptions (defalut enabled): Just blurs episode-related descriptions...
-    - Modify episode's titles (default enabled): It transforms the '((S#) E# - )Episode Title' pattern into '((S#) E# - )[Title Censored]'. In some elements, the season and episode numbers are not part of the title, which is why they are in parentheses. This is applied to page content, tooltips, URLs, and the browser tab.
+    - Modify episode's titles (default enabled): It transforms the '((S#) E# - )Episode Title' pattern into '((S#) E# - )[Title Censored]'. In some elements, the season and episode numbers are not part of the title, which is why they are in parentheses. This is applied to page content, tooltips, URLs, and the browser tab. **About the URL censorship, it will modify your history entry on your browser, that means that the censored title will appear there instead of the original one**.
     - *Hide Premium Trial-related stuff (default disabled): This hides the banner (on /watch pages), the nav icon (on the top bar), and the menu button (inside the drop-down menu). Disabled by default since it's not the main purpose of the script, but might be useful to some people.
 
     - In order to choose which things censor, just change the <em>USER_CONFIG</em> (true/false).
