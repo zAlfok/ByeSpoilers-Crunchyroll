@@ -4,11 +4,11 @@
 // @namespace      https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @match          https://www.crunchyroll.com/*
 // @grant          none
-// @version        1.1
+// @version        1.1.0
 // @license        GPL-3.0
 // @author         Alfok
-// @description    Censor episode's titles, thumbnails, descriptions, URL's and tooltips on Crunchyroll
-// @description:es Censura los títulos, miniaturas, descripciones, URLs y 'tooltips' de los episodios en Crunchyroll
+// @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. In other words, you'll avoid spoilers.
+// @description:es Censura los títulos, miniaturas, descripciones, URLs y 'tooltips' de los episodios en Crunchyroll. En otras palabras, evitarás spoilers.
 // @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/assets-images/logov2.png
 // @run-at         document-start
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
