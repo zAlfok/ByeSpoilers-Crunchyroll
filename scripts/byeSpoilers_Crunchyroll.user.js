@@ -3,7 +3,7 @@
 // @namespace      https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @match          https://www.crunchyroll.com/*
 // @grant          none
-// @version        1.0
+// @version        1.1
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll, inspired on TimeBomb's script (https://greasyfork.org/users/160017)
@@ -18,7 +18,7 @@
 // ------------------------------------------------------------------------------------------------------------------
 // To customize the script, change the USER_CONFIG object below.
 // USER CONFIGS BEGIN
-const debugEnable = false; // In order to see what's happening in the script, set this to true. It will log debug messages to the console.
+const debugEnable = false; // (NOT working yet) In order to see what's happening in the script, set this to true. It will log debug messages to the console.
 const USER_CONFIG = {
     // true: Blur episode thumbnails on the following pages:
     // /home: Continue Watching Grid, Watchlist Grid (Hover), 
@@ -148,9 +148,15 @@ const cssSelectorList = {
         }
     },
     "DESCRIPTIONS": {
-        "EP-DESCR_PLAYER": {
+        "EP-DESCR_PLAYER_EPISODE": {
             selector: '.expandable-section__wrapper--G-ttI p',
             blurAmount: 20,
+            blurActive: true,
+            modifyActive: false
+        },
+        "EP-DESCR_PLAYER_SERIES": { //needed since had to be more specific (afterwards) to avoid bluring on series description
+            selector: '.erc-show-description .expandable-section__wrapper--G-ttI p',
+            blurAmount: 0,
             blurActive: true,
             modifyActive: false
         },
@@ -229,11 +235,13 @@ function censorUrl() {
     } else {
         // console.log("CENSORURL: NO es una pagina de episodio")
     }
+    if (docTitleCensored && titleCensored) {
+        document.documentElement.style.filter = 'none';
+    }
 }
 
 function censorDocTitle() {
     // console.log("CENSORDOCTITLE: entre a censorDocTitle")
-    let crunchyLang = document.documentElement.lang
     const episodeRegexList = {
         "ar": /شاهد على كرانشي رول$/,
         "de": /Schau auf Crunchyroll$/,
@@ -247,32 +255,35 @@ function censorDocTitle() {
         "ru": /смотреть на Crunchyroll$/,
         "hi": /क्रंचीरोल पर देखें$/
     }
-    const episodeRegex = episodeRegexList[crunchyLang];
-    const censoredTitle = `[Episode Name Censored] - ${episodeRegexList[crunchyLang].toString().slice(1,-2)}`; //V20240715 - Dynamic episodeRegex
+    const crunchyLang = document.documentElement.lang;
+    const episodeRegex = episodeRegexList[crunchyLang] || episodeRegexList["en"];
+    const [episodeNumber, episodeTitle, seriesName] = getEpisodeTitleFromEpisodeSite();
 
-    let [episodeNumber, episodeTitle, seriesName] = getEpisodeTitleFromEpisodeSite();
+    // if (!isEpisodePage()) { //ya evaluado en mainLogic
+    //     console.log("CENSORDOCTITLE: No es una página de episodio");
+    //     return;
+    // }
 
-    let newDocTitle;
-    if (document.title !== censoredTitle && episodeRegex.test(document.title)) {
-        if (debugEnable) {
-            console.log('[ByeSpoilers - Crunchyroll Script] DEBUG: Censoring document.title, original is:', document.title, 'episode name is:', episodeTitle);
-        }
-        if (!!seriesName) {
-            if (episodeNumber !== false) {
-                newDocTitle = `${seriesName} ${episodeNumber} - ${episodeRegexList[crunchyLang].toString().slice(1, -2)}`; //V20240715 - Dynamic episodeRegex
-            } else {
-                newDocTitle = `${seriesName} - ${episodeRegexList[crunchyLang].toString().slice(1, -2)}`; //V20240715 - Dynamic episodeRegex
-            }
-        } else {
-            if (debugEnable) {
-                console.warn('[ByeSpoilers - Crunchyroll Script] DEBUG: Unable to include series name in title of censored episode, series name not found on page');
-            }
-            newDocTitle = `[Censored Episode Name] - ${episodeRegexList[crunchyLang].toString().slice(1,-2)}`; //V20240715 - Dynamic episodeRegex
-        }
+    if (document.title.includes("[Title Censored]")) {
+        // console.log("El título ya está censurado.");
+        return;
     }
-    if (newDocTitle && newDocTitle !== document.title) {
-        document.title = newDocTitle;
-        docTitleCensored = true;
+
+    const titleSuffix = episodeRegex.source.replace('\$', "");
+    let newTitle = "[Title Censored] - " + titleSuffix;
+
+    if (seriesName && episodeNumber) {
+        newTitle = `${seriesName} Episode ${episodeNumber} [Title Censored] - ${titleSuffix}`;
+    } else if (seriesName) {
+        newTitle = `${seriesName} [Title Censored] - ${titleSuffix}`;
+    } else if (episodeNumber) {
+        newTitle = `Episode ${episodeNumber} [Title Censored] - ${titleSuffix}`;
+    }
+
+    document.title = newTitle;
+    docTitleCensored = true;
+    if (titleCensored && (isEpisodePage() && urlCensored)) {
+        document.documentElement.style.filter = 'none';
     }
 }
 
@@ -355,6 +366,9 @@ function censorTitleGeneric(selector) {
     });
     // console.log("Censuré todos los elementos");
     titleCensored = true;
+    if (docTitleCensored && (isEpisodePage() && urlCensored)) {
+        document.documentElement.style.filter = 'none';
+    }
 }
 
 function isLogged() {
@@ -367,12 +381,104 @@ function isLogged() {
     }
 }
 
+
 // Main code block
+
+function mainLogic() {
+    const homeContinueWatching = document.querySelector('.erc-feed-continue-watching-item');
+    const historyListSite = document.querySelector('.erc-history-content')
+    let notLogged = !isLogged();
+    let notHomeContinueWatchingOnHomePage = isHomePage() && !homeContinueWatching;
+    let notHistoryListSiteOnHistoryPage = isHistoryPage() && !historyListSite;
+    
+    if (notLogged || notHomeContinueWatchingOnHomePage || notHistoryListSiteOnHistoryPage) {
+        // console.log("not logged: ", notLogged, "\nnot home continue watching on home page: ", notHomeContinueWatchingOnHomePage, "\nnot history list site on history page: ", notHistoryListSiteOnHistoryPage);
+        document.documentElement.style.filter = 'none';
+    } else {
+        // Verificación si el título debe estar censurado
+        let isTitleCensorshipNeeded = isHomePage() || isHistoryPage() || isSeriesPage() || isEpisodePage();
+        let isTitleCensoredCorrectly = !isTitleCensorshipNeeded || titleCensored;
+
+        // Verificación si la URL debe estar censurada (solo en la página de episodios)
+        let isUrlCensorshipNeeded = isEpisodePage();
+        let isUrlCensoredCorrectly = !isUrlCensorshipNeeded || urlCensored;
+
+        // Verificación si el docTitle debe estar censurado (solo en la página de episodios)
+        let isDocTitleCensorshipNeeded = isEpisodePage();
+        let isDocTitleCensoredCorrectly = !isDocTitleCensorshipNeeded || docTitleCensored;
+
+        // Verificación final
+        if (!isTitleCensoredCorrectly || !isUrlCensoredCorrectly || !isDocTitleCensoredCorrectly) {
+            // console.log("Una o más condiciones de censura no se cumplen.");
+            // Aquí el código a ejecutar si alguna condición de censura no se cumple
+            document.documentElement.style.filter = 'blur: 2px;';
+        } else {
+            // console.log("Todas las condiciones de censura se cumplen.");
+            // Aquí el código a ejecutar si todas las condiciones de censura se cumplen
+        }
+    }
+
+    // No funciona a nivel de css <style>, por lo que se hace a nivel de elemento
+    const botonWrapper = document.querySelector('.button-wrapper');
+    if (USER_CONFIG.HIDE_PREMIUM_TRIAL && botonWrapper) {
+        botonWrapper.style.display = 'none';
+    }
+    const iconWrapper = document.querySelector('.erc-user-actions > :first-child');
+    if (USER_CONFIG.HIDE_PREMIUM_TRIAL && iconWrapper) {
+        iconWrapper.style.display = 'none';
+    }
+    const fondo = document.querySelector('.vsc-initialized');
+    if (USER_CONFIG.HIDE_PREMIUM_TRIAL && fondo && isEpisodePage()) {
+        fondo.style.height = '0%';
+    } else {
+        fondo.style.height = '100%';
+    }
+
+    if  (
+            (isHomePage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
+            (isEpisodePage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true) && 
+                                (USER_CONFIG.MODIFY_DOCTITLE_EPISODE_TITLE ? docTitleCensored : true) &&
+                                (USER_CONFIG.MODIFY_URL_EPISODE_TITLE ? urlCensored : true)) ||
+            (isSeriesPage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
+            (isHistoryPage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
+            (isWatchlistPage()) ||
+            (isOtherPage())
+        ){
+        // console.log("Ya censuré todo lo pedido, me voy");
+        document.documentElement.style.filter = 'blur(0px)';
+    }
+
+    const targetToolTip = document.querySelector('.app-body-wrapper');
+    if (USER_CONFIG.MODIFY_TOOLTIPS && targetToolTip && !isWatchlistPage()) {
+        censorTooltips();
+    }
+    const targetDocTitle = document.querySelector('head > title');
+    if (USER_CONFIG.MODIFY_DOCTITLE_EPISODE_TITLE && targetDocTitle && isEpisodePage()) {
+        censorDocTitle();
+    }
+    if (USER_CONFIG.MODIFY_URL_EPISODE_TITLE && targetDocTitle && isEpisodePage()) {
+        censorUrl();
+        // console.log("CENSORED URL: ", urlCensored);
+    }
+    if (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES) {
+        for (let key in cssSelectorList["TITLES"]) {
+            if (cssSelectorList["TITLES"][key]["modifyActive"]) {
+                const selectorString = cssSelectorList["TITLES"][key]["selector"];
+                const targetPlayerTitle = document.querySelector(selectorString);
+                if (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES && targetPlayerTitle) {
+                    censorTitleGeneric(selectorString);
+                }
+            }
+        }
+    }
+    // console.log("fin mainLogic");
+}
+
 
 try {
     console.log('ByeSpoilers - Crunchyroll script loaded')
 
-    document.documentElement.style.filter = 'blur(2px)';
+    document.documentElement.style.filter = 'blur(8px)';
     // Blur the page while the script is loading
 
     // Apply cssE style to the page
@@ -387,96 +493,13 @@ try {
             console.error('[ByeSpoilers - Crunchyroll Script] DEBUG: CSS Error:', e);
         }
     }
-
+    // console.log(location.pathname);
     window.addEventListener('load', function () {
-
+        setTimeout(mainLogic(),0);
         new MutationObserver(() => {
-            const homeContinueWatching = document.querySelector('.erc-feed-continue-watching-item');
-            const historyListSite = document.querySelector('.erc-history-content')
-            let notLogged = !isLogged();
-            let notHomeContinueWatchingOnHomePage = isHomePage() && !homeContinueWatching;
-            let notHistoryListSiteOnHistoryPage = isHistoryPage() && !historyListSite;
-            
-            if (notLogged || notHomeContinueWatchingOnHomePage || notHistoryListSiteOnHistoryPage) {
-                // console.log("not logged: ", notLogged, "\nnot home continue watching on home page: ", notHomeContinueWatchingOnHomePage, "\nnot history list site on history page: ", notHistoryListSiteOnHistoryPage);
-                document.documentElement.style.filter = 'none';
-            } else {
-                // Verificación si el título debe estar censurado
-                let isTitleCensorshipNeeded = isHomePage() || isHistoryPage() || isSeriesPage() || isEpisodePage();
-                let isTitleCensoredCorrectly = !isTitleCensorshipNeeded || titleCensored;
-
-                // Verificación si la URL debe estar censurada (solo en la página de episodios)
-                let isUrlCensorshipNeeded = isEpisodePage();
-                let isUrlCensoredCorrectly = !isUrlCensorshipNeeded || urlCensored;
-
-                // Verificación si el docTitle debe estar censurado (solo en la página de episodios)
-                let isDocTitleCensorshipNeeded = isEpisodePage();
-                let isDocTitleCensoredCorrectly = !isDocTitleCensorshipNeeded || docTitleCensored;
-
-                // Verificación final
-                if (!isTitleCensoredCorrectly || !isUrlCensoredCorrectly || !isDocTitleCensoredCorrectly) {
-                    // console.log("Una o más condiciones de censura no se cumplen.");
-                    // Aquí el código a ejecutar si alguna condición de censura no se cumple
-                    document.documentElement.style.filter = '2px';
-                } else {
-                    // console.log("Todas las condiciones de censura se cumplen.");
-                    // Aquí el código a ejecutar si todas las condiciones de censura se cumplen
-                }
-            }
-
-            // No funciona a nivel de css <style>, por lo que se hace a nivel de elemento
-            const botonWrapper = document.querySelector('.button-wrapper');
-            if (USER_CONFIG.HIDE_PREMIUM_TRIAL && botonWrapper) {
-                botonWrapper.style.display = 'none';
-            }
-            const iconWrapper = document.querySelector('.erc-user-actions > :first-child');
-            if (USER_CONFIG.HIDE_PREMIUM_TRIAL && iconWrapper) {
-                iconWrapper.style.display = 'none';
-            }
-            const fondo = document.querySelector('.vsc-initialized');
-            if (USER_CONFIG.HIDE_PREMIUM_TRIAL && fondo && isEpisodePage()) {
-                fondo.style.height = '0%';
-            } else {
-                fondo.style.height = '100%';
-            }
-
-            if  (
-                    (isHomePage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
-                    (isEpisodePage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true) && 
-                                        (USER_CONFIG.MODIFY_DOCTITLE_EPISODE_TITLE ? docTitleCensored : true) &&
-                                        (USER_CONFIG.MODIFY_URL_EPISODE_TITLE ? urlCensored : true)) ||
-                    (isSeriesPage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
-                    (isHistoryPage() && (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES ? titleCensored : true)) ||
-                    (isWatchlistPage()) ||
-                    (isOtherPage())
-                ){
-                // console.log("Ya censuré todo lo pedido, me voy");
-                document.documentElement.style.filter = 'blur(0px)';
-            }
-
-            const targetToolTip = document.querySelector('.app-body-wrapper');
-            if (USER_CONFIG.MODIFY_TOOLTIPS && targetToolTip) {
-                censorTooltips();
-            }
-            const targetDocTitle = document.querySelector('head > title');
-            if (USER_CONFIG.MODIFY_DOCTITLE_EPISODE_TITLE && targetDocTitle) {
-                censorDocTitle();
-            }
-            if (USER_CONFIG.MODIFY_URL_EPISODE_TITLE && targetDocTitle) {
-                censorUrl();
-            }
-            if (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES) {
-                for (let key in cssSelectorList["TITLES"]) {
-                    if (cssSelectorList["TITLES"][key]["modifyActive"]) {
-                        const selectorString = cssSelectorList["TITLES"][key]["selector"];
-                        const targetPlayerTitle = document.querySelector(selectorString);
-                        if (USER_CONFIG.MODIFY_INSITE_EPISODE_TITLES && targetPlayerTitle) {
-                            censorTitleGeneric(selectorString);
-                        }
-                    }
-                }
-            }
-        }).observe(document.body, { subtree: true, childList: true });
+            // console.log("mutation observer document.body")
+            mainLogic();
+        }).observe(document, { subtree: true, childList: true });
     });
 
 
