@@ -24,29 +24,16 @@ If you use Crunchyroll and are fed up with episode titles or thumbnails (totally
 ## 📂 Installation
 <p>In order to use the script you should install a script-manager like Violentmonkey, Tampermonkey, etc. To do this you can search on the extension store of your browser:</p>
 
-<br>
-<p align="center">
-<a href="https://chrome.google.com/webstore/detail/violentmonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">
-  <img src="https://img.shields.io/badge/Install%20for%20Chrome-brightgreen?style=flat&logo=googlechrome&logoColor=white" alt="Install Violentmonkey for Chrome">
-  <img src="https://img.shields.io/static/v1?label=&message=Violentmonkey&color=blue&logo=violentmonkey&logoColor=white" alt="Violentmonkey">
-</a>
+ <div align="center">   
+     
+[![Violentmonkey](https://img.shields.io/static/v1?label=Violentmonkey&message=for%20Chrome&color=brightgreen&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/violentmonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)   [![Violentmonkey](https://img.shields.io/static/v1?label=Violentmonkey&message=for%20Firefox&color=orange&logo=firefox&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/)
+ </div>
 
-<a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/" target="_blank">
-  <img src="https://img.shields.io/badge/Install%20for%20Firefox-orange?style=flat&logo=firefox&logoColor=white" alt="Install Violentmonkey for Firefox">
-  <img src="https://img.shields.io/static/v1?label=&message=Violentmonkey&color=blue&logo=violentmonkey&logoColor=white" alt="Violentmonkey">
-</a>
+ <div align="center">   
+     
+[![Tampermonkey](https://img.shields.io/static/v1?label=Tampermonkey&message=for%20Chrome&color=brightgreen&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)   [![Tampermonkey](https://img.shields.io/static/v1?label=Tampermonkey&message=for%20Firefox&color=orange&logo=firefox&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
+ </div>
 
-<br>
-<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">
-  <img src="https://img.shields.io/badge/Install%20for%20Chrome-brightgreen?style=flat&logo=googlechrome&logoColor=white" alt="Install Tampermonkey for Chrome">
-  <img src="https://img.shields.io/static/v1?label=&message=Tampermonkey&color=black&logo=tampermonkey&logoColor=white" alt="Tampermonkey">
-</a>
-
-<a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/" target="_blank">
-  <img src="https://img.shields.io/badge/Install%20for%20Firefox-orange?style=flat&logo=firefox&logoColor=white" alt="Install Tampermonkey for Firefox">
-  <img src="https://img.shields.io/static/v1?label=&message=Tampermonkey&color=black&logo=tampermonkey&logoColor=white" alt="Tampermonkey">
-</a>
-</p>
 <br>
 Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js" target="_blank">
   <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
