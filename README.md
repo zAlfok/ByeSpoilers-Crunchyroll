@@ -1,4 +1,4 @@
-# ByeSpoilers - Crunchyroll <img src="assets-images/logov2.png" alt="Descripción de la imagen" style="height: 1em;">
+# ByeSpoilers - Crunchyroll
 Userscript that allows you to relax and avoid any spoilers from thumbnails, titles, etc on Crunchyroll. Inspired on TimeBomb's script (https://greasyfork.org/users/160017).  
 
 <div align="center">
