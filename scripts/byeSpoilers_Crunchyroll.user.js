@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           ByeSpoilers Crunchyroll
+// @name           ByeSpoilers - Crunchyroll
 // @namespace      https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @match          https://www.crunchyroll.com/*
 // @grant          none
