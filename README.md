@@ -23,7 +23,7 @@ Note: I am using Dark Reader (enables automatic dark mode on any site) and AdGua
 | ![Imagen 11](assets-images/05_2_without.jpg) | ![Imagen 12](assets-images/05_2_with.jpg) |
 
 ## 📂 Installation
-<p>In order to use the script you should install a script-manager like Violentmonkey, Tampermonkey, etc. To do this you can search on the extension store of your browser:</p>
+<p>In order to use the script you should install a script-manager like Violentmonkey, Tampermonkey, etc. To do this you can search on the extension store of your browser. For those mentioned on Chrome/Firefox just click the buttons below to go to their store pages:</p>
 
  <div align="center">   
      
