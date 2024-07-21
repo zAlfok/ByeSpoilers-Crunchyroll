@@ -7,10 +7,21 @@ Userscript that allows you to relax and avoid any spoilers from thumbnails, titl
     </picture>
 </p>
 
-<h2>Overview</h2>
+## Overview
 If you use Crunchyroll and are fed up with episode titles or thumbnails (totally not spoiler-ish wink wink) revealing what's going to happen (probably the most crucial part wink wink), or if you're scrolling through the episode list (trusting that no title or thumbnail will spoil a character's death wink wink) only to find out someone dies N episodes later, then this script is your new best friend! Let's break down what this script censors and how it works.
 
-<h2>Installation</h2>
+## 📷 Screenshots
+
+| Crunchyroll WITHOUT ByeSpoilers | Crunchyroll WITH ByeSpoilers |
+|--------------------------------------------|-----------------------------------------|
+| ![Imagen 1](assets-images/01_without.jpg) | ![Imagen 2](assets-images/02_with.jpg) |
+| ![Imagen 3](assets-images/02_without.jpg) | ![Imagen 4](assets-images/02_with.jpg) |
+| ![Imagen 5](assets-images/03_without.jpg) | ![Imagen 6](assets-images/03_with.jpg) |
+| ![Imagen 7](assets-images/04_without.jpg) | ![Imagen 8](assets-images/04_with.jpg) |
+| ![Imagen 9](assets-images/05_1_without.jpg) | ![Imagen 10](assets-images/05_2_with.jpg) |
+| ![Imagen 11](assets-images/05_2_without.jpg) | ![Imagen 12](assets-images/05_2_with.jpg) |
+
+## 📂 Installation
 <p>In order to use the script you should install a script-manager like Violentmonkey, Tampermonkey, etc. To do this you can search on the extension store of your browser:</p>
 
 <br>
@@ -41,7 +52,7 @@ Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/
   <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
 </a>
 
-<h2>Information</h2>
+## ⭐ Information and features
 - <b>What will it protect you from?</b><br> 
 Spoilers sneaking up like ninjas in the following pages:
     - /home: Continue Watching Grid, Watchlist Grid (Hover),
@@ -69,7 +80,12 @@ Wish to say yes... but actually don't really know. It has worked 99% of the time
 - <b>How did it start?</b><br>
 I was tired of being spoiled mainly due to titles and began searching for extensions or scripts but had little luck until I found TimeBomb's script, which didn’t work well, probably due to updates on Crunchyroll’s site. So, I decided to create my own based on the latest changes of the site (around July 2024). I’m not a web developer, or even a developer; this is just a hobby, so that's why you might find some bugs as said before. 
 
-IMPORTANT: As said before, this script may have some bugs. Please report them in order to improve the code. The current version doesn’t have comments (except for the config part) since everything was disorganized. I’ll be working on that (if you want to understand the code more than anything).
+## 🧑‍💻 Contributing
+As said before, this script may have some bugs. Please report in the issues section them in order to improve the code. The current version doesn’t have comments (except for the config part) since everything was disorganized. I’ll be working on that (if you want to understand the code more than anything).
+In general, any kind of contribution is greatly appreciated.
+
+## ✉️ Feedback
+If you have any feedback, you can also leave it in the issues section. It doesn't have to be a bug to contribute.
 
 ~ An enthusiast trying to do his best ~
 
