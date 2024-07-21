@@ -8,7 +8,7 @@
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions, URL's and tooltips on Crunchyroll
-// @description:es Censura los títulos, miniaturas, descripciones, URLs y tooltips de los episodios en Crunchyroll
+// @description:es Censura los títulos, miniaturas, descripciones, URLs y 'tooltips' de los episodios en Crunchyroll
 // @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/assets-images/logov2.png
 // @run-at         document-start
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
