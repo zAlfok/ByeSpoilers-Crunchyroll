@@ -39,7 +39,7 @@ Then you have to install ByeSpoilers Script: <a href="https://github.com/zAlfok/
   <img src="https://img.shields.io/badge/Install-ByeSpoilers-brightgreen" alt="Install">
 </a>
 <br><br>
-To do that make sure to click "Install + Edit" so you can modify the USER_CONFIG according to your preferences (if you'd like to)
+To do that make sure to click "Install + Edit" so you can modify the USER_CONFIG according to your preferences (if you'd like to).
 <br><br>
 <div align="center">
     <picture>
@@ -48,7 +48,7 @@ To do that make sure to click "Install + Edit" so you can modify the USER_CONFIG
 </div>
 <br>
 After that, make sure to mark the checkbox "Allow edits," change the USER_CONFIG settings by toggling true or false for each feature, and then click the "Save" button (or press Ctrl + S) to apply the changes. <b>After each time you save the script, you must refresh Crunchyroll (if it was open)</b> to see the updates.<br><br>
-<em>⚠️ NOTICE THAT, AS STATED NEXT TO THE ALLOW EDITS CHECKBOX, ANY CHANGES THAT YOU MAKE WILL BE LOST IF THE SCRIPT IS UPDATED SO YOU'LL HAVE TO SET YOUR PREFERENCES AGAIN</em>
+<em>⚠️ NOTICE THAT, AS STATED NEXT TO THE ALLOW EDITS CHECKBOX, ANY CHANGES THAT YOU MAKE WILL BE LOST IF THE SCRIPT IS UPDATED SO YOU'LL HAVE TO SET YOUR PREFERENCES AGAIN.</em>
 <br><br>
 <div align="center">
     <picture>
