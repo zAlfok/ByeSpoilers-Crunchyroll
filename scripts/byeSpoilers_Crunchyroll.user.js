@@ -20,7 +20,7 @@
 // ------------------------------------------------------------------------------------------------------------------
 // To customize the script, change the USER_CONFIG object below.
 // USER CONFIGS BEGIN
-const debugEnable = false; // (NOT working yet) In order to see what's happening in the script, set this to true. It will log debug messages to the console.
+const debugEnable = false; // In order to see what's happening in the script, set this to true. It will log messages to the console.
 const USER_CONFIG = {
     // true: Blur episode thumbnails on the following pages:
     // /home: Continue Watching Grid, Watchlist Grid (Hover), 
