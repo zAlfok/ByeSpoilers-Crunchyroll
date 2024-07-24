@@ -3,14 +3,17 @@
 // @name:es        Bye Spoilers - Crunchyroll
 // @namespace      https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @match          https://www.crunchyroll.com/*
+// @match          https://static.crunchyroll.com/vilos-v2/web/vilos/player.html
 // @grant          none
-// @version        1.1.1
+// @version        1.2.0
 // @license        GPL-3.0
 // @author         Alfok
-// @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. In other words, you'll avoid spoilers.
-// @description:es Censura los títulos, miniaturas, descripciones, URLs y 'tooltips' de los episodios en Crunchyroll. En otras palabras, evitarás spoilers.
+// @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. Skips in-video titles (in dev progress). In other words, you'll avoid spoilers.
+// @description:es Censura los títulos, miniaturas, descripciones, URLs y 'tooltips' de los episodios en Crunchyroll. Salta el título del episodio en el video (en progreso de desarrollo). En otras palabras, evitarás spoilers.
 // @icon           https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/assets-images/logov2.png
 // @run-at         document-start
+// @resource       TITLE_INTERVALS_JSON  https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/crunchyroll_titles_intervals_compactSimplified.json
+// @grant          GM_getResourceText
 // @homepageURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll
 // @downloadURL    https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js
 // @updateURL      https://github.com/zAlfok/ByeSpoilers-Crunchyroll/raw/master/scripts/byeSpoilers_Crunchyroll.user.js
@@ -505,6 +508,7 @@ function mainLogic() {
         } else {
             debugEnable && console.log("[mainLogic-censorURL]: USER_CONFIG.MODIFY_URL_EPISODE_TITLE is OFF.");
         }
+
     } else {
         debugEnable && console.log("[mainLogic-EP Page exlusive]: Not on episode page.");
     }
@@ -535,35 +539,132 @@ function mainLogic() {
     debugEnable && console.log("[mainLogic]: END");
 }
 
+// ----------------------------- v1.2.0 -----------------------------
+function extractEpisodeNumber(text) {
+    // Regexp to find the episode number after 'E' (ignores possible season number 'S')
+    const match = text.match(/(?:S\d+\s*)?E(\d+)/);
+    // If there's a match, return the episode number parsed as an integer
+    if (match) {
+        return parseInt(match[1], 10);
+    }
+    // If not, return NaN
+    return NaN;
+}
+function timeToSeconds(time) {
+    const [minutes, seconds] = time.split(':').map(Number);
+    return minutes * 60 + seconds;
+}
+function loadJSON() {
+    try {
+        const jsonText = GM_getResourceText("TITLE_INTERVALS_JSON");
+        titleIntervals = JSON.parse(jsonText);
+        debugEnable && console.log("[loadJSON]: Title intervals loaded:", titleIntervals);
+    } catch (error) {
+        console.error("[loadJSON]: Error loading title intervals:", error);
+    }
+}
+function initializeMainPage() {
+    // Listens to messages from the player iframe
+    window.addEventListener('message', function(event) {
+        if (event.origin !== "https://static.crunchyroll.com") return;
+        debugEnable && console.log("[initializeMainPage]: Main page received message:", event.data);
+        
+        // If the message contains the current time of the player do the following
+        if (event.data.currentTime !== undefined) {
+            const currentTime = event.data.currentTime;
+            debugEnable && console.log("[initializeMainPage]: Current time:", currentTime);
+            
+            [episodeNumberStr, episodeTitle, seriesName] = getEpisodeTitleFromEpisodeSite();
+            episodeNumberInt = extractEpisodeNumber(episodeNumberStr);
+            if (titleIntervals[seriesName] && titleIntervals[seriesName][`${episodeNumberInt}`]) {
+                const interval = titleIntervals[seriesName][`${episodeNumberInt}`];
+                const startTime = timeToSeconds(interval[0]);
+                const endTime = timeToSeconds(interval[1]);
+                // If current time is within the interval, skip it
+                if (currentTime >= startTime-0.4 && currentTime <= endTime+0.4) {
+                    debugEnable && console.log("[initializeMainPage]: Skipping interval");
+                    const iframe = document.querySelector('iframe[src^="https://static.crunchyroll.com"]');
+                    if (iframe) {
+                        // If iframe is found, send a message to the player to skip the interval
+                        iframe.contentWindow.postMessage({action: 'setCurrentTime', time: endTime+0.4}, '*');
+                    }
+                }
+            }
+
+        }
+    });
+
+    // Ask for the player's current time, every second
+    setInterval(function() {
+        const iframe = document.querySelector('iframe[src^="https://static.crunchyroll.com"]');
+        if (iframe) {
+            debugEnable && console.log("[initializeMainPage]: Sending getCurrentTime message (1s interval)");
+            iframe.contentWindow.postMessage({action: 'getCurrentTime'}, 'https://static.crunchyroll.com');
+        }
+    }, 1000);
+}
+
+function initializePlayerIframe() {
+    // Listens to messages from the main page
+    window.addEventListener('message', function(event) {
+        if (event.origin !== "https://www.crunchyroll.com") return;
+        debugEnable && console.log("[initializePlayerIframe]: Player iframe received message:", event.data);
+        // Searches for video player
+        const player = document.querySelector('video');
+        if (!player) {
+            debugEnable && console.log("[initializePlayerIframe]: Video player not found in iframe");
+            return;
+        }
+        // Handle received messages
+        if (event.data.action === 'getCurrentTime') {
+            debugEnable && console.log("[initializePlayerIframe]: Getting current time:", player.currentTime);
+            window.parent.postMessage({currentTime: player.currentTime}, 'https://www.crunchyroll.com');
+        } else if (event.data.action === 'setCurrentTime') {
+            debugEnable && console.log("[initializePlayerIframe]: Setting current time to:", event.data.time);
+            player.currentTime = event.data.time;
+        }
+    });
+}
+
 // Execution
 try {
     console.log('[Bye Spoilers - Crunchyroll]: Script execution started');
-    // Blur the page while DOM and script are loading
-    document.documentElement.style.filter = 'blur(8px)';
-    debugEnable && console.log("[Bye Spoilers - Crunchyroll]: First load blur applied.");
-    // Apply cssE style to the page (hidePremiumTrial is not applied here completely, part is done on mainLogic)
-    try {
-        concatStyleCSS();
-        var $newStyleE = document.createElement('style');
-        var cssNodeE = document.createTextNode(cssE);
-        $newStyleE.appendChild(cssNodeE);
-        document.head.appendChild($newStyleE);
-        debugEnable && console.log('[ByeSpoilers - Crunchyroll Script]: CSS Applied');
-    } catch (e) {
-        debugEnable && console.error('[ByeSpoilers - Crunchyroll Script] DEBUG: CSS Error:', e);
+    if (window.location.hostname === "www.crunchyroll.com") {
+        console.log("Script running on main Crunchyroll page");
+        loadJSON();
+        // Blur the page while DOM and script are loading
+        document.documentElement.style.filter = 'blur(8px)';
+        debugEnable && console.log("[Bye Spoilers - Crunchyroll]: First load blur applied.");
+        // Apply cssE style to the page (hidePremiumTrial is not applied here completely, part is done on mainLogic)
+        try {
+            concatStyleCSS();
+            var $newStyleE = document.createElement('style');
+            var cssNodeE = document.createTextNode(cssE);
+            $newStyleE.appendChild(cssNodeE);
+            document.head.appendChild($newStyleE);
+            debugEnable && console.log('[ByeSpoilers - Crunchyroll Script]: CSS Applied');
+        } catch (e) {
+            debugEnable && console.error('[ByeSpoilers - Crunchyroll Script] DEBUG: CSS Error:', e);
+        }
+        // When the page is loaded, apply the main logic and set a MutationObserver to 
+        // apply censorship again when the DOM changes (because of SPA behavior)
+        window.addEventListener('load', function () {
+            debugEnable && console.log("[Bye Spoilers - Crunchyroll]: Window loaded, executing mainLogic after 0ms timeout");
+            setTimeout(mainLogic(),0);
+            debugEnable && console.log("[Bye Spoilers - Crunchyroll]: MutationObserver set to apply censorship again when the DOM changes");
+            new MutationObserver(() => {
+                debugEnable && console.log("[Bye Spoilers - Crunchyroll]: MutationObserver triggered, executing mainLogic");
+                mainLogic();
+            }).observe(document, { subtree: true, childList: true });
+        });
+        initializeMainPage();
+
+    } else if (window.location.hostname === "static.crunchyroll.com") {
+        console.log("Script running in video player iframe");
+        initializePlayerIframe();
     }
-    // When the page is loaded, apply the main logic and set a MutationObserver to 
-    // apply censorship again when the DOM changes (because of SPA behavior)
-    window.addEventListener('load', function () {
-        debugEnable && console.log("[Bye Spoilers - Crunchyroll]: Window loaded, executing mainLogic after 0ms timeout");
-        setTimeout(mainLogic(),0);
-        debugEnable && console.log("[Bye Spoilers - Crunchyroll]: MutationObserver set to apply censorship again when the DOM changes");
-        new MutationObserver(() => {
-            debugEnable && console.log("[Bye Spoilers - Crunchyroll]: MutationObserver triggered, executing mainLogic");
-            mainLogic();
-        }).observe(document, { subtree: true, childList: true });
-    });
     console.log('[Bye Spoilers - Crunchyroll]: Script execution finished. Observer keeping track of changes.');
+
 } catch (e) {
     console.error('[Bye Spoilers - Crunchyroll]: There was an error loading the script. If this causes noticeable issues, please leave feedback including this error:', e);
     throw e;
