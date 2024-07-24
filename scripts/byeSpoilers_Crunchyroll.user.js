@@ -5,7 +5,7 @@
 // @match          https://www.crunchyroll.com/*
 // @match          https://static.crunchyroll.com/vilos-v2/web/vilos/player.html
 // @grant          none
-// @version        1.2.0
+// @version        1.2.1
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. Skips in-video titles (in dev progress). In other words, you'll avoid spoilers.
@@ -25,6 +25,8 @@
 // USER CONFIGS BEGIN
 const debugEnable = false; // In order to see what's happening in the script, set this to true. It will log messages to the console.
 const USER_CONFIG = {
+    // true: Skip in-video episode titles (in development, default is false)
+    SKIP_EPISODE_TITLES: false, 
     // true: Blur episode thumbnails on the following pages:
     // /home: Continue Watching Grid, Watchlist Grid (Hover), 
     // /watchlist: Grid of Episodes (Hover)
@@ -657,11 +659,12 @@ try {
                 mainLogic();
             }).observe(document, { subtree: true, childList: true });
         });
-        initializeMainPage();
+
+        USER_CONFIG.SKIP_EPISODE_TITLES && initializeMainPage();
 
     } else if (window.location.hostname === "static.crunchyroll.com") {
         console.log("Script running in video player iframe");
-        initializePlayerIframe();
+        USER_CONFIG.SKIP_EPISODE_TITLES && initializePlayerIframe();
     }
     console.log('[Bye Spoilers - Crunchyroll]: Script execution finished. Observer keeping track of changes.');
 
