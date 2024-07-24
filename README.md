@@ -48,12 +48,22 @@ To do that make sure to click "Install + Edit" so you can modify the USER_CONFIG
     </picture>
 </div>
 <br>
-After that, make sure to mark the checkbox "Allow edits," change the USER_CONFIG settings by toggling true or false for each feature, and then click the "Save" button (or press Ctrl + S) to apply the changes. <b>After each time you save the script, you must refresh Crunchyroll (if it was open)</b> to see the updates.<br><br>
+After that, make sure to mark the checkbox "Allow edits," change the <em>USER_CONFIG</em> settings by toggling true or false for each feature, and then click the "Save" button (or press Ctrl + S) to apply the changes. <b>After each time you save the script, you must refresh Crunchyroll (if it was open)</b> to see the updates.<br><br>
 <em>⚠️ NOTICE THAT, AS STATED NEXT TO THE ALLOW EDITS CHECKBOX, ANY CHANGES THAT YOU MAKE WILL BE LOST IF THE SCRIPT IS UPDATED SO YOU'LL HAVE TO SET YOUR PREFERENCES AGAIN.</em>
 <br><br>
 <div align="center">
     <picture>
         <img src="assets-images/install_02.jpg">
+    </picture>
+</div>
+
+## Skip in-video feature
+A new feature has been added ***(currently just tested on Violentmonkey)***. The idea is that you won't have to worry even for the titles inside the same video by skipping them automatically. However, it is needed the data about the time intervals of each episode so, right now this feature is kind of useless since there are very few (about 10 by the time I'm writing this). Because of that I'll need your help. <br>
+As chapters will be added frequently, you will need to click the update button in your script manager so that the changes are reflected even if there is not actually an update of the script as such. This is due to the way the data is being worked with, so that it does not have to be downloaded (in the future) every time Crunchyroll loads.<br>
+**If you are interested in contributing, please send me an email (find below in Feedback section).**
+<div align="center">
+    <picture>
+        <img src="assets-images/skip_video_howTo.png" width="300">
     </picture>
 </div>
 
@@ -73,9 +83,8 @@ Since spoilers can come from all sorts of places and in all sorts of forms, fort
     - Blur episode's descriptions (defalut enabled): Just blurs episode-related descriptions...
     - Modify episode's titles (default enabled): It transforms the '((S#) E# - )Episode Title' pattern into '((S#) E# - )[Title Censored]'. In some elements, the season and episode numbers are not part of the title, which is why they are in parentheses. This is applied to page content, tooltips, URLs, and the browser tab. **About the URL censorship, it will modify your history entry on your browser, that means that the censored title will appear there instead of the original one**.
     - *Hide Premium Trial-related stuff (default disabled): This hides the banner (on /watch pages), the nav icon (on the top bar), and the menu button (inside the drop-down menu). Disabled by default since it's not the main purpose of the script, but might be useful to some people.
+    - NEW: Skip in-video titles. A new feature in development. If you want to contribute please send me an email (could find below in Feedback section).
 
-    - In order to choose which things censor, just change the <em>USER_CONFIG</em> (true/false).
-    
 - <b>Which languages does it support?</b><br>
 Based on Crunchyroll's language list in configuration.
 
@@ -90,7 +99,8 @@ As said before, this script may have some bugs. Please report in the issues sect
 In general, any kind of contribution is greatly appreciated.
 
 ## ✉️ Feedback
-If you have any feedback, you can also leave it in the issues section. It doesn't have to be a bug to contribute.
+If you have any feedback, you can also leave it in the issues section. It doesn't have to be a bug to contribute, as said before help is needed to finish the new skip in-video feature.
+email: jose974044@gmail.com
 
 ~ An enthusiast trying to do his best ~
 
