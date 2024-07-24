@@ -5,7 +5,7 @@
 // @match          https://www.crunchyroll.com/*
 // @match          https://static.crunchyroll.com/vilos-v2/web/vilos/player.html
 // @grant          none
-// @version        1.2.2
+// @version        1.2.3
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. Skips in-video titles (in dev progress). In other words, you'll avoid spoilers.
@@ -25,6 +25,14 @@
 // USER CONFIGS BEGIN
 const debugEnable = false; // In order to see what's happening in the script, set this to true. It will log messages to the console.
 const USER_CONFIG = {
+    // true: Fetch the JSON file instead of using the resource (default is false), 
+    // this is works together with SKIP_EPISODE_TITLES
+    // Tampermonkey has trouble with GM_getResourceText, so it's better to use fetch 
+    // (just try with false first and if it doesn't work, set it to true)
+    // Violentmonkey supports GM_getResourceText, so it's better to use it, to avoid 
+    // downloading the file every time, however, in this initial phase could be better
+    // considering that the file will be updated frequently
+    FETCH_INSTEAD_OF_RESOURCE: false, 
     // true: Skip in-video episode titles (in development, default is false)
     SKIP_EPISODE_TITLES: false, 
     // true: Blur episode thumbnails on the following pages:
@@ -558,14 +566,42 @@ function timeToSeconds(time) {
     return minutes * 60 + secondsWithMillis;
 }
 function loadJSON() {
-    try {
-        const jsonText = GM_getResourceText("TITLE_INTERVALS_JSON");
-        titleIntervals = JSON.parse(jsonText);
-        debugEnable && console.log("[loadJSON]: Title intervals loaded:", titleIntervals);
-    } catch (error) {
-        console.error("[loadJSON]: Error loading title intervals:", error);
+    if (USER_CONFIG.FETCH_INSTEAD_OF_RESOURCE) {
+        fetch('https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/scripts/crunchyroll_titles_intervals_compactSimplified.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                titleIntervals = data; // Asigna los datos a la variable global
+                console.log('Data loaded successfully:', titleIntervals);
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    } else {
+        try {
+            const jsonText = GM_getResourceText("TITLE_INTERVALS_JSON");
+            titleIntervals = JSON.parse(jsonText);
+            debugEnable && console.log("[loadJSON]: Title intervals loaded:", titleIntervals);
+        } catch (error) {
+            console.error("[loadJSON]: Error loading title intervals:", error, "\nTry to set FETCH_INSTEAD_OF_RESOURCE to true in the USER_CONFIG section.\nTrying to fetch the JSON file instead.");
+            fetch('https://raw.githubusercontent.com/zAlfok/ByeSpoilers-Crunchyroll/master/scripts/crunchyroll_titles_intervals_compactSimplified.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    titleIntervals = data; // Asigna los datos a la variable global
+                    console.log('Data loaded successfully:', titleIntervals);
+                })
+                .catch(error => console.error('Error loading JSON:', error));
+        }
     }
-}
+    }
+
 function initializeMainPage() {
     // Listens to messages from the player iframe
     window.addEventListener('message', function(event) {
