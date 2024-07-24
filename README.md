@@ -69,6 +69,14 @@ Change the default values of _FETCH_INSTEAD_OF_RESOURCE_ and _SKIP_EPISODE_TITLE
         <img src="assets-images/skip_video_howTo02.png">
     </picture>
 </div>
+<br>
+
+**ALTERNATIVE:** If using Violentmonkey, you can keep _FETCH_INSTEAD_OF_RESOURCE_: false, but you'll have to "update" the script manually each time you want to see changes of the database (it will indicate that there are no updates since the script probably hasn’t changed, but we do this to update the resource, that is, the database.). *This could be useful for collaborators*.
+<div align="center">
+    <picture>
+        <img src="assets-images/skip_video_howTo.png" width="300">
+    </picture>
+</div>
 
 ## ⭐ Information and features
 - <b>What will it protect you from?</b><br> 
