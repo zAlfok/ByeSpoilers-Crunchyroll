@@ -84,6 +84,7 @@ let urlCensored = false;
 let titleCensored = false;
 // CSS string to apply to the page
 let cssE = '';
+let titleIntervals = {};
 // List of CSS selectors to apply most of the changes (except for the tooltips)
 // blurActive and modifyActive control which elements should be blurred and/or modified, advanced control if want to allow certain elements )
 const cssSelectorList = {
