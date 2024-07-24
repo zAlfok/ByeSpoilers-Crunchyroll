@@ -5,7 +5,7 @@
 // @match          https://www.crunchyroll.com/*
 // @match          https://static.crunchyroll.com/vilos-v2/web/vilos/player.html
 // @grant          none
-// @version        1.2.1
+// @version        1.2.2
 // @license        GPL-3.0
 // @author         Alfok
 // @description    Censor episode's titles, thumbnails, descriptions and tooltips on Crunchyroll. Skips in-video titles (in dev progress). In other words, you'll avoid spoilers.
@@ -553,8 +553,8 @@ function extractEpisodeNumber(text) {
     return NaN;
 }
 function timeToSeconds(time) {
-    const [minutes, seconds] = time.split(':').map(Number);
-    return minutes * 60 + seconds;
+    const [minutes, secondsWithMillis] = time.split(':').map(Number);
+    return minutes * 60 + secondsWithMillis;
 }
 function loadJSON() {
     try {
@@ -573,6 +573,11 @@ function initializeMainPage() {
         
         // If the message contains the current time of the player do the following
         if (event.data.currentTime !== undefined) {
+            const iframe = document.querySelector('iframe[src^="https://static.crunchyroll.com"]');
+            if (!iframe) {
+                debugEnable && console.log("[initializeMainPage]: Player iframe not found");
+                return;
+            }
             const currentTime = event.data.currentTime;
             debugEnable && console.log("[initializeMainPage]: Current time:", currentTime);
             
@@ -583,14 +588,13 @@ function initializeMainPage() {
                 const startTime = timeToSeconds(interval[0]);
                 const endTime = timeToSeconds(interval[1]);
                 // If current time is within the interval, skip it
-                if (currentTime >= startTime-0.4 && currentTime <= endTime+0.4) {
+                if (currentTime >= startTime-0.5 && currentTime <= endTime+0.5) {
+
                     debugEnable && console.log("[initializeMainPage]: Skipping interval");
-                    const iframe = document.querySelector('iframe[src^="https://static.crunchyroll.com"]');
-                    if (iframe) {
-                        // If iframe is found, send a message to the player to skip the interval
-                        iframe.contentWindow.postMessage({action: 'setCurrentTime', time: endTime+0.4}, '*');
-                    }
-                }
+                    // If iframe is found, send a message to the player to skip the interval
+                    iframe.contentWindow.postMessage({action: 'setCurrentTime', time: endTime+0.5}, '*');
+
+                } 
             }
 
         }
@@ -603,7 +607,7 @@ function initializeMainPage() {
             debugEnable && console.log("[initializeMainPage]: Sending getCurrentTime message (1s interval)");
             iframe.contentWindow.postMessage({action: 'getCurrentTime'}, 'https://static.crunchyroll.com');
         }
-    }, 1000);
+    }, 500);
 }
 
 function initializePlayerIframe() {
