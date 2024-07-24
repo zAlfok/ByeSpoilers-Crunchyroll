@@ -57,7 +57,7 @@ After that, make sure to mark the checkbox "Allow edits," change the <em>USER_CO
     </picture>
 </div>
 
-## Skip in-video feature
+## 🆕 Skip in-video titles feature
 A new feature has been added ***(currently just tested on Violentmonkey)***. The idea is that you won't have to worry even for the titles inside the same video by skipping them automatically. However, it is needed the data about the time intervals of each episode so, right now this feature is kind of useless since there are very few (about 10 by the time I'm writing this). Because of that I'll need your help. <br>
 As chapters will be added frequently, you will need to click the update button in your script manager so that the changes are reflected even if there is not actually an update of the script as such. This is due to the way the data is being worked with, so that it does not have to be downloaded (in the future) every time Crunchyroll loads.<br>
 **If you are interested in contributing, please send me an email (find below in Feedback section).**
