@@ -58,12 +58,15 @@ After that, make sure to mark the checkbox "Allow edits," change the <em>USER_CO
 </div>
 
 ## 🆕 Skip in-video titles feature
-A new feature has been added ***(currently just tested on Violentmonkey)***. The idea is that you won't have to worry even for the titles inside the same video by skipping them automatically. However, it is needed the data about the time intervals of each episode so, right now this feature is kind of useless since there are very few (about 10 by the time I'm writing this). Because of that I'll need your help. <br>
-As chapters will be added frequently, you will need to click the update button in your script manager so that the changes are reflected even if there is not actually an update of the script as such. This is due to the way the data is being worked with, so that it does not have to be downloaded (in the future) every time Crunchyroll loads.<br>
+A new feature has been added. The idea is that you won't have to worry even for the titles inside the same video by skipping them automatically. However, it is needed the data about the time intervals of each episode so, right now this feature is kind of useless since there are very few (about 10 by the time I'm writing this). Because of that I'll need your help. <br>
 **If you are interested in contributing, please send me an email (find below in Feedback section).**
+
+Instructions to use this feature ***(tested in Violentmonkey and Tampermonkey)***:
+Change the default values of _FETCH_INSTEAD_OF_RESOURCE_ and _SKIP_EPISODE_TITLES_ in _USER_CONFIG_ to true (default values: false). Note: The rest of the options can also be customized to adjust the censorship.
+
 <div align="center">
     <picture>
-        <img src="assets-images/skip_video_howTo.png" width="300">
+        <img src="assets-images/skip_video_howTo02.png">
     </picture>
 </div>
 
@@ -77,7 +80,7 @@ Spoilers sneaking up like ninjas in the following pages:
     - /watch: Info wrapper, Next/Previous Episode, See More Episodes (Side and PopUp)
 
 - <b>How’s this spoiler-shielding sorcery supposed to work?</b><br>
-Since spoilers can come from all sorts of places and in all sorts of forms, fortunately, we just have to focus on 6 things: thumbnails, titles (on the site and the tab), descriptions, URL's and tooltips (when you keep your mouse over an element and it displays like a mini-mini-popup). So the script has a initial configuration section in which you can choose the level of censorship. You will be allowed to choose to:
+Since spoilers can come from all sorts of places and in all sorts of forms, fortunately, we just have to focus on 6 things: thumbnails, titles (on the site and the tab), descriptions, URL's and tooltips (when you keep your mouse over an element and it displays like a mini-mini-popup). So the script has a initial configuration section in which you can choose the level of censorship. You will be allowed to choose (in _USER_CONFIG_ as explained before) to:
     - Blur episode's thumbnails (default enabled): Notice that not all thumbnails are episode-related so just those have blur.
     - Blur episode's titles (default disabled): Notices that this will blur the entire title element, so you'll not be able to see the episode number either.
     - Blur episode's descriptions (defalut enabled): Just blurs episode-related descriptions...
